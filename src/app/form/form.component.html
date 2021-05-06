@@ -1,0 +1,31 @@
+<!--Render DOM content in <app-form></app-form> selector
+include in app-componet-html -->
+<div class="form-main">  <!--Complete Page-->
+    <div class='form-row'> <!-- label and dropdown for State Names-->
+            <select #mySelect (change)="selectState(mySelect.value)"> <!--Trick-->
+                <option [disabled]=true>Select State</option>
+                <option *ngFor = "let state of states" [value] = "state.name" >{{state.name}}</option>
+            </select>
+    </div>
+    <div class="form-row"> <!--Add New Button for State Name input-->
+        <button (click)="showInput('state')">Add New State</button>
+    </div>
+    <div *ngIf="showStateInput" class="form-row">  <!--State Name Input-->
+            <input type="text" [formControl]="stateName" placeholder="Enter State name" required>
+            <button class="icon" type="submit" [disabled] = "!stateName.valid" (click)="op('state','add')"><span>&#10004;</span></button>
+            <button class="icon" (click)="op('state')"><span>&#10006;</span></button>
+    </div>
+    <div class="form-row"> <!--label and dropdown for District Name-->
+            <select>
+                <option *ngFor = "let district of filteredDistricts" [value] = "district" >{{district.name}}</option>
+            </select>
+    </div>
+    <div class="form-row" *ngIf="isStateSelected">  <!--Button for Add New District-->
+        <button (click)="showInput('district')">Add New District</button>
+    </div>
+    <div *ngIf="showDistrictInput" class="form-row"> <!-- Input for Add New District -->
+        <input type="text" [formControl]="districtName" placeholder="Enter district name" required>
+            <button class="icon" type="submit" [disabled] = "!districtName.valid" (click)="op('district' ,'add')"><span>&#10004;</span></button>
+            <button class="icon" (click)="op('district')"><span>&#10006;</span></button>
+    </div>
+</div>
